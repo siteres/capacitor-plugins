@@ -5,6 +5,7 @@ import Capacitor
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
  */
+@available(iOS 13.0, *) 
 @objc(FilesystemPlugin)
 public class FilesystemPlugin: CAPPlugin {
     private let implementation = Filesystem()
@@ -344,6 +345,27 @@ public class FilesystemPlugin: CAPPlugin {
             "publicStorage": "granted"
         ])
     }
+
+    @objc func moveFilesToCloud(_ call: CAPPluginCall) {
+        let result = implementation.moveFilesToCloud()
+        call.resolve(["result": result])
+    }
+
+    @objc func moveFilesToLocal(_ call: CAPPluginCall) {
+        let result = implementation.moveFilesToLocal()
+        call.resolve(["result": result])
+    }
+    
+    @objc func observeDirDo(_ call: CAPPluginCall) {
+        print("will observeDirDo")
+        let directory = call.getString("directory") ?? ""
+        implementation.observeDir(directory: directory, f: {
+            let uf = self.implementation.getUpdatedFiles()
+            self.notifyListeners("directoryObserverEvent", data: ["updatedFiles": uf])
+        })
+        print("end observeDirDo")
+        call.resolve(["success": "ok"])
+    }    
 
     /**
      * Helper for handling errors

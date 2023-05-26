@@ -17,4 +17,7 @@ CAP_PLUGIN(FilesystemPlugin, "Filesystem",
            CAP_PLUGIN_METHOD(copy, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(checkPermissions, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(requestPermissions, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(moveFilesToCloud, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(moveFilesToLocal, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(observeDirDo, CAPPluginReturnPromise);
 )
