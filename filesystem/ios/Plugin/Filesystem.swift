@@ -204,6 +204,17 @@ extension MetadataProvider {
 @available(iOS 13.0, *)
 @objc public class Filesystem: NSObject {
 
+    private var uf: [String]?
+    
+    public func setUpdatedFiles(uf: [String]) {
+        self.uf = uf
+    }
+    public func getUpdatedFiles() -> [String] {
+        return self.uf ?? []
+    }
+
+    private(set) var metadataProvider: MetadataProvider?
+
     public enum FilesystemError: LocalizedError {
         case noParentFolder, noSave, failEncode, noAppend, notEmpty
 
