@@ -377,6 +377,9 @@ extension MetadataProvider {
      * files with directory mappings.
      */
     @objc public func getFileUrl(at path: String, in directory: String?) -> URL? {
+        if (directory == "CLOUD" && FileManager.default.ubiquityIdentityToken != nil) {
+            return FileManager.default.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent(path);
+        }
         if let directory = getDirectory(directory: directory) {
             guard let dir = FileManager.default.urls(for: directory, in: .userDomainMask).first else {
                 return nil
